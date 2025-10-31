@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Shop Bod Gaming — Mua bán Acc Roblox</title>
+  <style>
+    /* Reset + base */
+    *{box-sizing:border-box}body{font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;line-height:1.4;margin:0;color:#111;background:#f7f7f8}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+
+    /* Header */
+    .top{background:#0b1226;color:#fff;padding:10px 16px;display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:44px;height:44px;border-radius:8px;background:linear-gradient(135deg,#ff6b6b,#feca57);display:flex;align-items:center;justify-content:center;font-weight:700;color:#111}
+    .brand h1{font-size:16px;margin:0}
+    nav{display:flex;gap:12px;align-items:center}
+    .navlink{padding:8px 12px;border-radius:8px;background:transparent;color:#fff;cursor:pointer}
+    .navlink:hover{background:rgba(255,255,255,0.06)}
+
+    /* Main layout */
+    .container{max-width:1100px;margin:18px auto;padding:0 16px}
+    .top-row{display:flex;gap:18px}
+    .left{width:260px}
+    .right{flex:1}
+
+    /* Search + filters */
+    .card{background:#fff;border-radius:12px;padding:14px;box-shadow:0 6px 18px rgba(10,10,10,0.06)}
+    .search-box{display:flex;gap:8px}
+    .search-box input{flex:1;padding:10px;border-radius:8px;border:1px solid #e6e7ee}
+    .search-box button{padding:10px 12px;border-radius:8px;border:none;background:#0b1226;color:#fff;cursor:pointer}
+    .filters{margin-top:12px;display:flex;flex-direction:column;gap:10px}
+    .filter-group h4{margin:0 0 6px 0;font-size:13px;color:#6b7280}
+    .tags{display:flex;flex-wrap:wrap;gap:8px}
+    .tag{padding:6px 8px;border-radius:999px;border:1px solid #e3e6ef;font-size:13px;background:#fcfcfd;cursor:pointer}
+    .tag.active{background:#0b1226;color:#fff;border-color:transparent}
+
+    /* Products grid */
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:12px}
+    .acc{background:#fff;padding:10px;border-radius:10px;cursor:pointer;border:1px solid #eef0f6}
+    .acc .title{font-weight:700;margin:8px 0 4px}
+    .acc .id{font-size:12px;color:#6b7280}
+    .acc .price{font-weight:700;margin-top:8px}
+    .acc .tags{margin-top:8px}
+    .acc .tag{font-size:12px;padding:4px 6px}
+
+    /* Footer */
+    footer{margin-top:28px;padding:18px;background:#0b1226;color:#fff;border-top:4px solid #0b0f1a}
+    .footer-grid{display:flex;gap:24px;flex-wrap:wrap}
+    .footer-grid .col{min-width:220px}
+    .footer-grid h4{margin:0 0 8px 0}
+    .muted{color:#cbd5e1;font-size:13px}
+
+    /* Modal */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.6);display:flex;align-items:center;justify-content:center;padding:18px}
+    .modal{width:100%;max-width:720px;background:#fff;padding:16px;border-radius:12px}
+    .modal h3{margin:0 0 10px}
+    .row{display:flex;gap:10px}
+
+    /* small helpers */
+    .btn{display:inline-block;padding:8px 12px;border-radius:8px;border:none;background:#0b1226;color:#fff;cursor:pointer}
+    .muted-small{font-size:12px;color:#6b7280}
+    input[type=range]{width:100%}
+    .wallet{background:#fff;padding:8px;border-radius:8px}
+
+    /* responsive */
+    @media (max-width:900px){.top-row{flex-direction:column}.left{width:100%}.grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr))}}
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <div class="logo" id="homeBtn">SB</div>
+      <div>
+        <h1>Shop Bod Gaming</h1>
+        <div class="muted-small">Mua bán Acc & Robux — Uy tín & An toàn</div>
+      </div>
+    </div>
+    <nav>
+      <div class="navlink" id="nav-nap">Nạp tiền</div>
+      <div class="navlink" id="nav-help">Hướng dẫn</div>
+      <div class="navlink" id="nav-news">Tin tức</div>
+      <div class="navlink" id="authBtn">Đăng nhập / Đăng ký</div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div class="top-row">
+      <aside class="left">
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+            <strong>Tìm kiếm</strong>
+            <span class="muted-small">Bộ lọc nhanh</span>
+          </div>
+          <div class="search-box">
+            <input id="searchInput" placeholder="Tìm theo tên, id, tag..." />
+            <button id="searchBtn">Tìm</button>
+          </div>
+
+          <div class="filters">
+            <div class="filter-group">
+              <h4>Danh mục game</h4>
+              <div id="categoryList" class="tags"></div>
+            </div>
+
+            <div class="filter-group">
+              <h4>Tags (ví dụ: có pet)</h4>
+              <div id="tagList" class="tags"></div>
+            </div>
+
+            <div class="filter-group">
+              <h4>Khoảng giá</h4>
+              <div><input type="range" id="priceRange" min="0" max="200" value="200" /></div>
+              <div class="muted-small">Giá tối đa: <span id="priceMax">200</span>k</div>
+            </div>
+
+            <div class="filter-group">
+              <h4>Sắp xếp</h4>
+              <select id="sortBy" style="width:100%;padding:8px;border-radius:8px;border:1px solid #e6e7ee">
+                <option value="new">Mới nhất</option>
+                <option value="price-asc">Giá thấp → cao</option>
+                <option value="price-desc">Giá cao → thấp</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+
+        <div style="height:12px"></div>
+
+        <div class="card">
+          <strong>Ví của bạn</strong>
+          <div style="margin-top:8px">
+            <div id="walletBox" class="wallet">Chưa đăng nhập</div>
+            <div style="margin-top:8px;display:flex;gap:8px">
+              <button class="btn" id="openNap">Nạp tiền</button>
+              <button class="btn" id="logoutBtn" style="background:#e74c3c;display:none">Đăng xuất</button>
+            </div>
+          </div>
+        </div>
+
+      </aside>
+
+      <section class="right">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+          <div style="display:flex;flex-direction:column">
+            <div class="muted-small">Kết quả tìm kiếm</div>
+            <h2 id="resultsTitle">Tất cả acc</h2>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn" id="btn-add-sample">Thêm sample</button>
+            <button class="btn" id="btn-clear-filters">Xóa lọc</button>
+          </div>
+        </div>
+
+        <div id="grid" class="grid" aria-live="polite"></div>
+
+      </section>
+    </div>
+
+    <footer>
+      <div class="container" style="padding:0">
+        <div class="footer-grid">
+          <div class="col">
+            <h4>Về Shop Bod Gaming</h4>
+            <p class="muted">Lựa Chọn Số 1 Cho Mua Bán Robux Và Acc Roblox. Shoprobloxviet.vn nơi đáng tin cậy cho mọi game thủ Roblox. Uy Tín Là Niềm Tự Hào, An Toàn Là Tiêu Chí.</p>
+          </div>
+          <div class="col">
+            <h4>Chính sách</h4>
+            <ul class="muted-small" style="padding-left:0;list-style:none;margin:0">
+              <li>Chính sách bảo mật</li>
+              <li>Chính sách bán hàng</li>
+              <li>Chính sách đổi trả</li>
+              <li>Điều khoản sử dụng</li>
+              <li>Hướng dẫn mua acc</li>
+              <li>Câu hỏi thường gặp</li>
+            </ul>
+          </div>
+          <div class="col">
+            <h4>Liên hệ</h4>
+            <div class="muted">Hotline: ....</div>
+            <div class="muted">Work time: 8h sáng - 11h khuya</div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px;text-align:center;color:#cfd8e3;font-size:13px">DMCA.com Protection Status — © shopbodgaming.vn</div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Modals -->
+  <template id="productModalTpl">
+    <div class="modal-backdrop">
+      <div class="modal">
+        <button style="float:right" class="btn" id="closeModal">Đóng</button>
+        <div style="clear:both"></div>
+        <div style="display:flex;gap:12px;margin-top:8px">
+          <div style="width:220px">
+            <img id="prodImg" src="" alt="Ảnh acc" />
+          </div>
+          <div style="flex:1">
+            <h3 id="prodName"></h3>
+            <div class="muted-small">ID: <span id="prodId"></span></div>
+            <div style="margin-top:8px" id="prodDesc"></div>
+            <div class="tags" id="prodTags" style="margin-top:8px"></div>
+            <div style="margin-top:12px;font-size:18px;font-weight:700">Giá: <span id="prodPrice"></span>k</div>
+
+            <div style="margin-top:12px;display:flex;gap:8px">
+              <button class="btn" id="buyBtn">Mua ngay</button>
+              <button class="btn" id="favBtn">Thêm yêu thích</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <template id="authTpl">
+    <div class="modal-backdrop">
+      <div class="modal">
+        <button style="float:right" class="btn" id="closeAuth">Đóng</button>
+        <div style="clear:both"></div>
+        <h3>Đăng nhập / Đăng ký</h3>
+        <div style="display:flex;gap:12px;margin-top:8px">
+          <div style="flex:1">
+            <h4>Đăng nhập</h4>
+            <input id="loginUser" placeholder="Tên đăng nhập" style="width:100%;padding:8px;border:1px solid #e6e7ee;border-radius:8px;margin-bottom:8px" />
+            <input id="loginPass" placeholder="Mật khẩu" type="password" style="width:100%;padding:8px;border:1px solid #e6e7ee;border-radius:8px;margin-bottom:8px" />
+            <button class="btn" id="doLogin">Đăng nhập</button>
+          </div>
+
+          <div style="flex:1">
+            <h4>Đăng ký</h4>
+            <input id="regUser" placeholder="Tên đăng ký" style="width:100%;padding:8px;border:1px solid #e6e7ee;border-radius:8px;margin-bottom:8px" />
+            <input id="regPass" placeholder="Mật khẩu" type="password" style="width:100%;padding:8px;border:1px solid #e6e7ee;border-radius:8px;margin-bottom:8px" />
+            <button class="btn" id="doReg">Tạo tài khoản</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <template id="napTpl">
+    <div class="modal-backdrop">
+      <div class="modal">
+        <button style="float:right" class="btn" id="closeNap">Đóng</button>
+        <div style="clear:both"></div>
+        <h3>Nạp tiền vào ví (giả lập)</h3>
+        <div style="margin-top:8px">
+          <div class="muted-small">Số tiền (k)</div>
+          <input id="napAmount" type="number" min="1" value="50" style="width:100%;padding:8px;border:1px solid #e6e7ee;border-radius:8px;margin-top:8px" />
+          <div style="margin-top:8px;display:flex;gap:8px">
+            <button class="btn" id="confirmNap">Nạp</button>
+            <button class="btn" id="closeNap2">Hủy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <script>
+    // --- Data layer (localStorage simple DB) ---
+    const DB = {
+      usersKey: 'sb_users',
+      sessionKey: 'sb_session',
+      accsKey: 'sb_accs'
+    }
+
+    function loadJSON(key, fallback){
+      try{const v = localStorage.getItem(key);return v?JSON.parse(v):fallback}catch(e){return fallback}
+    }
+    function saveJSON(key,obj){localStorage.setItem(key,JSON.stringify(obj))}
+
+    // seed sample accounts if empty
+    let accs = loadJSON(DB.accsKey, []);
+    if(accs.length===0){
+      accs = [
+        {id:'#rbgag366',name:'Acc Blox Fruits - Pet hiếm',game:'Blox Fruits',price:120,tags:['pet','dev'],img:'https://i.imgur.com/8Km9tLL.png',desc:'Acc có pet hiếm, level cao, nhiều quà.'},
+        {id:'#rbx001',name:'Acc Adopt Me! - Full pet',game:'Adopt Me!',price:180,tags:['pet','full'],img:'https://i.imgur.com/1N8K3Kq.png',desc:'Full pet, ready to trade.'},
+        {id:'#rbx002',name:'Acc Build A Boat - Starter',game:'Build A Boat',price:35,tags:['starter'],img:'https://i.imgur.com/5tj6S7Ol.png',desc:'Acc mới, giá rẻ.'}
+      ];
+      saveJSON(DB.accsKey,accs);
+    }
+
+    let users = loadJSON(DB.usersKey, []);
+    let session = loadJSON(DB.sessionKey, null);
+
+    // utility
+    const $ = s=>document.querySelector(s);
+    const $$ = s=>Array.from(document.querySelectorAll(s));
+
+    // UI refs
+    const grid = $('#grid');
+    const searchInput = $('#searchInput');
+    const searchBtn = $('#searchBtn');
+    const tagList = $('#tagList');
+    const categoryList = $('#categoryList');
+    const priceRange = $('#priceRange');
+    const priceMax = $('#priceMax');
+    const sortBy = $('#sortBy');
+    const walletBox = $('#walletBox');
+    const authBtn = $('#authBtn');
+    const logoutBtn = $('#logoutBtn');
+
+    // derived lists
+    function unique(arr){return [...new Set(arr)]}
+    function getAllTags(){return unique(accs.flatMap(a=>a.tags||[]))}
+    function getAllCategories(){return unique(accs.map(a=>a.game))}
+
+    // make tag buttons
+    let activeTags = new Set();
+    let activeCategory = null;
+
+    function renderTagButtons(){
+      tagList.innerHTML='';
+      getAllTags().forEach(t=>{
+        const b = document.createElement('div');b.className='tag';b.textContent=t;
+        if(activeTags.has(t))b.classList.add('active');
+        b.onclick = ()=>{ if(activeTags.has(t))activeTags.delete(t); else activeTags.add(t); renderTagButtons(); renderGrid(); }
+        tagList.appendChild(b);
+      })
+    }
+    function renderCategoryButtons(){
+      categoryList.innerHTML='';
+      const all = document.createElement('div');all.className='tag';all.textContent='Tất cả'; if(!activeCategory)all.classList.add('active');
+      all.onclick=()=>{activeCategory=null;renderCategoryButtons();renderGrid()}; categoryList.appendChild(all);
+      getAllCategories().forEach(c=>{
+        const b=document.createElement('div');b.className='tag';b.textContent=c; if(activeCategory===c)b.classList.add('active');
+        b.onclick=()=>{activeCategory=c;renderCategoryButtons();renderGrid()}
+        categoryList.appendChild(b);
+      })
+    }
+
+    // render product grid
+    function renderGrid(){
+      const q = searchInput.value.trim().toLowerCase();
+      const maxPrice = Number(priceRange.value);
+      priceMax.textContent = maxPrice;
+      let list = accs.filter(a=>a.price <= maxPrice);
+      if(activeCategory) list = list.filter(a=>a.game===activeCategory);
+      if(activeTags.size>0) list = list.filter(a=>Array.from(activeTags).every(t=>a.tags.includes(t)));
+      if(q) list = list.filter(a=> (a.name+a.id+(a.tags||[]).join(' ')+a.game).toLowerCase().includes(q));
+
+      // sort
+      const s = sortBy.value;
+      if(s==='price-asc') list.sort((x,y)=>x.price-y.price);
+      else if(s==='price-desc') list.sort((x,y)=>y.price-x.price);
+      else list.sort((x,y)=>0); // keep seed order, new later
+
+      grid.innerHTML='';
+      if(list.length===0) grid.innerHTML='<div class="muted-small">Không tìm thấy acc nào phù hợp.</div>';
+      list.forEach(a=>{
+        const el = document.createElement('div'); el.className='acc';
+        el.innerHTML = `
+          <div style="height:120px;overflow:hidden;border-radius:8px;background:#f1f5f9;display:flex;align-items:center;justify-content:center"><img src="${a.img}" alt="${a.name}" style="max-height:120px"/></div>
+          <div class="title">${a.name}</div>
+          <div class="id">${a.game} · <span class="muted-small">${a.id}</span></div>
+          <div class="tags">${(a.tags||[]).map(t=>`<span class="tag">${t}</span>`).join(' ')}</div>
+          <div class="price">${a.price}k</div>
+        `;
+        el.onclick = ()=>openProduct(a);
+        grid.appendChild(el);
+      })
+    }
+
+    // product modal
+    function openProduct(a){
+      const tpl = document.getElementById('productModalTpl');
+      const node = tpl.content.cloneNode(true);
+      const backdrop = node.querySelector('.modal-backdrop');
+      node.getElementById('prodImg').src = a.img||'';
+      node.getElementById('prodName').textContent = a.name;
+      node.getElementById('prodId').textContent = a.id;
+      node.getElementById('prodDesc').textContent = a.desc||'';
+      node.getElementById('prodPrice').textContent = a.price;
+      const tagsCon = node.getElementById('prodTags');
+      (a.tags||[]).forEach(t=>{const s=document.createElement('span');s.className='tag';s.textContent=t;tagsCon.appendChild(s)});
+
+      node.getElementById('closeModal').onclick = ()=>backdrop.remove();
+      node.getElementById('favBtn').onclick = ()=>{ alert('Đã thêm vào yêu thích (giả lập)'); };
+      node.getElementById('buyBtn').onclick = ()=>{ buyAccount(a, backdrop) };
+
+      document.body.appendChild(backdrop);
+    }
+
+    function buyAccount(a, backdrop){
+      const sess = loadJSON(DB.sessionKey, null);
+      if(!sess){
+        alert('Bạn cần đăng nhập để mua.'); backdrop.remove(); openAuth(); return;
+      }
+      const users = loadJSON(DB.usersKey, []);
+      const me = users.find(u=>u.username===sess.username);
+      if(!me) { alert('Tài khoản người dùng không tồn tại'); backdrop.remove(); return; }
+      if(me.wallet >= a.price){
+        if(!confirm(`Xác nhận mua ${a.name} - ${a.price}k ?`)) return;
+        me.wallet -= a.price; saveJSON(DB.usersKey,users);
+        // remove acc from list (simulate sold)
+        accs = accs.filter(x=>x.id!==a.id);
+        saveJSON(DB.accsKey,accs);
+        saveJSON(DB.sessionKey, {username:me.username});
+        alert('Mua thành công! Số dư mới: ' + me.wallet + 'k');
+        backdrop.remove(); renderGrid(); renderWallet(); renderCategoryButtons(); renderTagButtons();
+      } else {
+        alert('Ví không đủ. Vui lòng nạp thêm.');
+      }
+    }
+
+    // auth modal
+    function openAuth(){
+      const tpl = document.getElementById('authTpl');
+      const node = tpl.content.cloneNode(true);
+      const back = node.querySelector('.modal-backdrop');
+      document.body.appendChild(back);
+      back.querySelector('#closeAuth').onclick = ()=>back.remove();
+      back.querySelector('#doReg').onclick = ()=>{
+        const u = back.querySelector('#regUser').value.trim(); const p = back.querySelector('#regPass').value;
+        if(!u||!p){alert('Nhập đủ thông tin');return}
+        const users = loadJSON(DB.usersKey,[]);
+        if(users.find(x=>x.username===u)){alert('Tên đã tồn tại');return}
+        users.push({username:u,password:p,wallet:0}); saveJSON(DB.usersKey,users);
+        alert('Đăng ký thành công! Hãy đăng nhập.');
+      }
+      back.querySelector('#doLogin').onclick = ()=>{
+        const u=back.querySelector('#loginUser').value.trim(); const p=back.querySelector('#loginPass').value;
+        const users = loadJSON(DB.usersKey,[]);
+        const me = users.find(x=>x.username===u && x.password===p);
+        if(!me){alert('Tài khoản hoặc mật khẩu không đúng');return}
+        saveJSON(DB.sessionKey,{username:me.username}); back.remove(); renderWallet(); renderAuthButtons();
+        alert('Đăng nhập thành công!');
+      }
+    }
+
+    // nap modal
+    function openNap(){
+      const tpl = document.getElementById('napTpl');
+      const node = tpl.content.cloneNode(true);
+      const back = node.querySelector('.modal-backdrop');
+      document.body.appendChild(back);
+      back.querySelector('#closeNap').onclick = ()=>back.remove();
+      back.querySelector('#closeNap2').onclick = ()=>back.remove();
+      back.querySelector('#confirmNap').onclick = ()=>{
+        const v = Number(back.querySelector('#napAmount').value)||0;
+        if(v<=0){alert('Nhập số tiền hợp lệ');return}
+        const sess = loadJSON(DB.sessionKey,null);
+        if(!sess){alert('Bạn phải đăng nhập để nạp');back.remove(); openAuth();return}
+        const users = loadJSON(DB.usersKey,[]);
+        const me = users.find(x=>x.username===sess.username);
+        if(!me){alert('Người dùng không tồn tại');back.remove();return}
+        me.wallet = (me.wallet||0) + v; saveJSON(DB.usersKey,users);
+        back.remove(); renderWallet(); alert('Nạp thành công +'+v+'k');
+      }
+    }
+
+    // wallet & session UI
+    function renderWallet(){
+      const sess = loadJSON(DB.sessionKey,null);
+      if(!sess){ walletBox.textContent='Chưa đăng nhập'; logoutBtn.style.display='none'; authBtn.style.display='inline-block'; return }
+      const users = loadJSON(DB.usersKey,[]);
+      const me = users.find(x=>x.username===sess.username);
+      walletBox.innerHTML = `<strong>${me.username}</strong><div class="muted-small">Số dư: ${me.wallet||0}k</div>`;
+      logoutBtn.style.display='inline-block'; authBtn.style.display='none';
+    }
+    function renderAuthButtons(){ renderWallet(); }
+
+    // interactions
+    searchBtn.onclick = ()=>renderGrid();
+    $('#btn-clear-filters').onclick = ()=>{ searchInput.value=''; activeTags=new Set(); activeCategory=null; priceRange.value=200; sortBy.value='new'; renderTagButtons(); renderCategoryButtons(); renderGrid(); };
+    $('#btn-add-sample').onclick = ()=>{ // add a demo acc quickly
+      const n = prompt('Tên acc (vd: Acc test)'); if(!n) return; const id = '#rbx'+Math.floor(Math.random()*9999);
+      const price = Number(prompt('Giá (k)',50))||50; const g = prompt('Game', 'Misc'); const t = prompt('Tags (phân tách bằng dấu phẩy)','pet');
+      const obj = {id, name:n, price, game:g, tags:(t||'').split(',').map(x=>x.trim()).filter(Boolean), img:'https://i.imgur.com/5tj6S7Ol.png', desc:'Mô tả ngắn'};
+      accs.push(obj); saveJSON(DB.accsKey,accs); renderGrid(); renderCategoryButtons(); renderTagButtons();
+    }
+
+    priceRange.oninput = ()=>renderGrid(); sortBy.onchange = ()=>renderGrid();
+
+    // auth nav
+    authBtn.onclick = openAuth; $('#nav-nap').onclick = openNap; $('#openNap').onclick = openNap;
+    $('#nav-help').onclick = ()=>alert('Hướng dẫn:
+1) Tìm acc bằng ô tìm kiếm hoặc chọn tag.
+2) Bấm vào acc để xem chi tiết, sau đó mua bằng ví.
+3) Đăng ký/đăng nhập để sử dụng ví.');
+    $('#nav-news').onclick = ()=>alert('Tin tức: phần tin tức chưa được triển khai (giả lập).');
+    $('#homeBtn').onclick = ()=>{ searchInput.value=''; activeTags=new Set(); activeCategory=null; renderCategoryButtons(); renderTagButtons(); renderGrid(); }
+
+    logoutBtn.onclick = ()=>{ localStorage.removeItem(DB.sessionKey); renderWallet(); renderAuthButtons(); alert('Đã đăng xuất'); }
+
+    // initial render
+    renderTagButtons(); renderCategoryButtons(); renderGrid(); renderWallet();
+
+  </script>
+</body>
+</html>
+<script>
+const API_URL = "http://localhost:4000/api/auth";
+
+// ---------- GỌI API ----------
+async function apiRegister(username, password) {
+  const res = await fetch(`${API_URL}/register`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ username, password })
+  });
+  return res.json();
+}
+
+async function apiLogin(username, password) {
+  const res = await fetch(`${API_URL}/login`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ username, password })
+  });
+  return res.json();
+}
+
+async function apiMe() {
+  const res = await fetch(`${API_URL}/me`, { credentials: 'include' });
+  return res.json();
+}
+
+async function apiLogout() {
+  await fetch(`${API_URL}/logout`, { method: 'POST', credentials: 'include' });
+  location.reload();
+}
+
+// ---------- GIAO DIỆN ----------
+const loginForm = document.getElementById('loginForm');
+const registerForm = document.getElementById('registerForm');
+const userInfo = document.getElementById('userInfo');
+
+async function checkUser() {
+  const data = await apiMe();
+  if (data.ok && data.user) {
+    userInfo.innerHTML = `
+      <p>Xin chào <b>${data.user.username}</b>!</p>
+      <p>💰 Ví: ${data.user.wallet} VNĐ</p>
+      <button onclick="apiLogout()">Đăng xuất</button>
+    `;
+    document.querySelector('.auth-section').style.display = 'none';
+    userInfo.style.display = 'block';
+  }
+}
+
+// Gửi form đăng ký
+if (registerForm) {
+  registerForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    const u = e.target.username.value.trim();
+    const p = e.target.password.value.trim();
+    const res = await apiRegister(u, p);
+    if (res.ok) {
+      alert('Đăng ký thành công!');
+      checkUser();
+    } else {
+      alert(res.error || 'Đăng ký thất bại');
+    }
+  });
+}
+
+// Gửi form đăng nhập
+if (loginForm) {
+  loginForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    const u = e.target.username.value.trim();
+    const p = e.target.password.value.trim();
+    const res = await apiLogin(u, p);
+    if (res.ok) {
+      alert('Đăng nhập thành công!');
+      checkUser();
+    } else {
+      alert(res.error || 'Sai tài khoản hoặc mật khẩu');
+    }
+  });
+}
+
+// Kiểm tra khi load trang
+checkUser();
+</script>
